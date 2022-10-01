@@ -103,6 +103,14 @@ $ go run cmd/main.go
   Setup Prometheus + Grafana (optional)
 </summary>
 
+### Run Prometheus + Grafana
+
+The environments were configured using Docker Compose, to start the environment you must run:
+
+```bash
+$ docker-compose up
+```
+
 ### Prometheus
 
 #### Check Rabbitmq status
