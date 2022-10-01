@@ -1,0 +1,6 @@
+CREATE TABLE orders (
+  id VARCHAR(255) PRIMARY KEY NOT NULL,
+  price FLOAT NOT NULL,
+  tax FLOAT NULL,
+  final_price FLOAT NOT NULL
+)
