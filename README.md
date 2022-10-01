@@ -6,7 +6,7 @@
   />
 </p>
 
-# Golang + Rabbitmq example
+# Golang + Rabbitmq
 
 ## Overview
 
@@ -95,5 +95,64 @@ Now to finish, just consume these messages, this procedure will occur concurrent
 ```bash
 $ go run cmd/main.go
 ```
+
+</details>
+
+<details>
+<summary>
+  Setup Prometheus + Grafana (optional)
+</summary>
+
+### Prometheus
+
+#### Check Rabbitmq status
+
+1. Go to http://localhost:9090.
+2. Choose the `Status` option.
+3. Click on `Targets`.
+
+Make sure the `State` column is `UP`
+
+![prometheus-targets](.github/prometheus-targets.png)
+
+### Grafana
+
+#### Configure Rabbitmq Dashboard
+
+1. Go to http://localhost:3000.
+2. Click on the `Settings icon` and choose the `Data sources` option.
+
+![grafana-datasource](.github/grafana-datasource.png)
+
+3. Click on `Add data source`.
+
+![grafana-datasource-add](.github/grafana-datasource-add.png)
+
+4. Click on `Prometheus`.
+
+![grafana-datasource-add-prometheus](.github/grafana-datasource-add-prometheus.png)
+
+5. Update `URL` field value to `http://prometheus:9090`.
+6. Click on `Save & test`.
+
+![grafana-datasource-prometheus-settings](.github/grafana-datasource-prometheus-settings.png)
+
+7. Click on the `Dashboard icon` and choose the `+ Import` option.
+
+![grafana-dashboard-import](.github/grafana-dashboard-import.png)
+
+8. In the `Import via grafana.com` field, enter the value `10991` and click on the `Load` button.
+
+> **10991** is the Rabbitmq Dashboard ID, you can get this and others from this link: https://grafana.com/grafana/dashboards
+
+![grafana-dashboard-load](.github/grafana-dashboard-load.png)
+
+9. Select in the `prometheus` option the Prometheus that was configured there in the `Data source` section and click on the `Import` button, you can change the Dashboard name and the location where it will be saved as well.
+
+![grafana-dashboard-import-rabbitmq](.github/grafana-dashboard-import-rabbitmq.png)
+
+Rabbitmq Dashboad
+
+![grafana-rabbitmq-dashboard](.github/grafana-rabbitmq-dashboard.png)
 
 </details>
