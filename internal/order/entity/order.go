@@ -14,6 +14,7 @@ type OrderRepositoryInterface interface {
 	GetTotal() (int, error)
 }
 
+// Check if required fields have been filled
 func (o Order) IsValid() error {
 	if o.Id == "" {
 		return errors.New("invalid id")
@@ -30,6 +31,7 @@ func (o Order) IsValid() error {
 	return nil
 }
 
+// Calculate the final price of the Order
 func (o *Order) CalculateFinalPrice() error {
 	o.FinalPrice = o.Price + o.Tax
 
@@ -42,6 +44,7 @@ func (o *Order) CalculateFinalPrice() error {
 	return nil
 }
 
+// Create a new instance for Order
 func NewOrder(id string, price float64, tax float64) (*Order, error) {
 	order := &Order{
 		Id:    id,

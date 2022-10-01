@@ -14,6 +14,7 @@ type Order struct {
 	Price float64
 }
 
+// Generates a random fake Order
 func generateOrder() Order {
 	return Order{
 		Id:    uuid.New().String(),
@@ -21,6 +22,7 @@ func generateOrder() Order {
 	}
 }
 
+// Send a message to Rabbitmq amq.direct exchange with the order data
 func Notify(rabbitmqChannel *amqp.Channel, order Order) error {
 	body, err := json.Marshal(order)
 
@@ -47,6 +49,7 @@ func Notify(rabbitmqChannel *amqp.Channel, order Order) error {
 	return nil
 }
 
+// Produces 1.000 messages and sends them to Rabbitmq
 func main() {
 	connection, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 

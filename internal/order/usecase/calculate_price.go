@@ -19,10 +19,12 @@ type CalculateFinalPriceUseCase struct {
 	OrderRepository entity.OrderRepositoryInterface
 }
 
+// Create a new instance for CalculateFinalPriceUseCase
 func NewCalculateFinalPriceUseCase(orderRepository entity.OrderRepositoryInterface) *CalculateFinalPriceUseCase {
 	return &CalculateFinalPriceUseCase{OrderRepository: orderRepository}
 }
 
+// Calculate the final order price and save that order
 func (c *CalculateFinalPriceUseCase) Execute(input OrderInputDTO) (*OrderOutputDTO, error) {
 	order, err := entity.NewOrder(input.Id, input.Price, input.Tax)
 

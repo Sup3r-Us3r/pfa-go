@@ -16,6 +16,7 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
+// Work to process the order that was read from the message channel
 func worker(
 	workerId int,
 	messageDeliveryChannel <-chan amqp.Delivery,
@@ -44,6 +45,7 @@ func worker(
 	}
 }
 
+// Start Database, HTTP Server, Rabbitmq Consumer and Work
 func main() {
 	const maxWorkers int = 3
 	wg := sync.WaitGroup{}

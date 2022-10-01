@@ -7,14 +7,17 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// Implements OrderRepositoryInterface
 type OrderRepository struct {
 	Database *sql.DB
 }
 
+// Create a new instance for Order Repository
 func NewOrderRepository(database *sql.DB) *OrderRepository {
 	return &OrderRepository{Database: database}
 }
 
+// Save a requested order
 func (o *OrderRepository) Save(order *entity.Order) error {
 	stmt, err := o.Database.Prepare(`
 		INSERT INTO orders (id, price, tax, final_price) VALUES (?, ?, ?, ?)
@@ -33,6 +36,7 @@ func (o *OrderRepository) Save(order *entity.Order) error {
 	return nil
 }
 
+// Gets the total number of orders that have been entered
 func (o *OrderRepository) GetTotal() (int, error) {
 	var totalOrders int
 

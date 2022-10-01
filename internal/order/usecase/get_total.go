@@ -10,10 +10,12 @@ type GetTotalUseCase struct {
 	OrderRepository entity.OrderRepositoryInterface
 }
 
+// Create a new instance for GetTotalUseCase
 func NewGetTotalUseCase(orderRepository entity.OrderRepositoryInterface) *GetTotalUseCase {
 	return &GetTotalUseCase{OrderRepository: orderRepository}
 }
 
+// Check the total number of registered orders
 func (o *GetTotalUseCase) Execute() (*GetTotalOutputDTO, error) {
 	totalOrders, err := o.OrderRepository.GetTotal()
 
