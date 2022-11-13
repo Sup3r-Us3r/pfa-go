@@ -93,15 +93,15 @@ func main() {
 
 	defer rabbitmqChannel.Close()
 
-	messageDeliveryChannel := make(chan amqp.Delivery)
+	messageDeliveryChannel := make(chan amqp.Delivery, 1000)
 
 	go rabbitmq.Consume(rabbitmqChannel, messageDeliveryChannel)
 
 	wg.Add(maxWorkers)
 
-	for workId := 1; workId <= 3; workId++ {
+	for workerId := 1; workerId <= 3; workerId++ {
 		defer wg.Done()
-		go worker(workId, messageDeliveryChannel, calculateFinalPriceUseCase)
+		go worker(workerId, messageDeliveryChannel, calculateFinalPriceUseCase)
 	}
 
 	wg.Wait()

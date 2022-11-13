@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"math/rand"
+	"time"
 
 	"github.com/google/uuid"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -24,6 +25,10 @@ func generateOrder() Order {
 
 // Send a message to Rabbitmq amq.direct exchange with the order data
 func Notify(rabbitmqChannel *amqp.Channel, order Order) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+
+	defer cancel()
+
 	body, err := json.Marshal(order)
 
 	if err != nil {
@@ -31,14 +36,15 @@ func Notify(rabbitmqChannel *amqp.Channel, order Order) error {
 	}
 
 	err = rabbitmqChannel.PublishWithContext(
-		context.Background(), // context
-		"amq.direct",         // exchange
-		"",                   // key
-		false,                // mandatory
-		false,                // immediate
+		ctx,          // context
+		"amq.direct", // exchange
+		"",           // key
+		false,        // mandatory
+		false,        // immediate
 		amqp.Publishing{
-			ContentType: "application/json",
-			Body:        body,
+			ContentType:  "application/json",
+			Body:         body,
+			DeliveryMode: 2,
 		},
 	)
 
